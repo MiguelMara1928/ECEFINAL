@@ -19,7 +19,7 @@ const int sensorMins[8] = {803, 712,  595,  641,  595,  664,  641,  781};
 const float sensorRange[8] = {1697, 1442, 1364, 976,  1203, 1836, 1859, 1719};
 
 // tuning
-int baseSpeed = 120; 
+int baseSpeed = 130; 
 float Kp = 0.07;    
 float Kd = 0.6; 
 
@@ -97,7 +97,7 @@ void Uturn(){
 
       analogWrite(left_pwm_pin, 150);
       analogWrite(right_pwm_pin, 150);
-      delay(240);
+      delay(250);
 
       // reset everything
       turnTriggered = false; 
@@ -111,11 +111,11 @@ int Xspeed(int cur, int der) {
   //dynamic speed
   // if error is small and derivative is small go fast otherwise go slow
   if (abs(cur) < 145 && abs(der) < 35){
-    Kd = 0.8;
-    return 235; // straightaway speed
+    Kd = 0.82;
+    return 240; // straightaway speed
   }
-  Kd = 0.75;
-  return 200;  // cornering speed
+  Kd = 0.77;
+  return 220;  // cornering speed
 }
 
 void loop() {
@@ -151,7 +151,7 @@ void loop() {
   else if (baseSpeed > targetSpeed)
     baseSpeed -= 5;
 
-  baseSpeed = constrain(baseSpeed, 200, 235);
+  baseSpeed = constrain(baseSpeed, 220, 240);
 
 
   // PD Logic
