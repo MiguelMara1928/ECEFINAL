@@ -20,8 +20,8 @@ const float sensorRange[8] = {1697, 1442, 1364, 976,  1203, 1836, 1859, 1719};
 
 // tuning
 int baseSpeed = 130; 
-float Kp = 0.07;    
-float Kd = 0.6; 
+float Kp = 0.12;    
+float Kd = 1.4; 
 
 // globals
 int lastError = 0;
@@ -88,16 +88,19 @@ void Uturn(){
       digitalWrite(right_dir_pin, HIGH); 
       analogWrite(left_pwm_pin, 215);
       analogWrite(right_pwm_pin, 215);
-      delay(250); //. <------------ TUNE WITH NEW BATTERIES
+      delay(215); //. <------------ TUNE WITH NEW BATTERIES
       
       digitalWrite(right_dir_pin, LOW);
       analogWrite(left_pwm_pin, 0);
       analogWrite(right_pwm_pin, 0);
-      delay(10);
+      delay(25);
 
       analogWrite(left_pwm_pin, 150);
       analogWrite(right_pwm_pin, 150);
-      delay(250);
+      delay(290);
+
+      analogWrite(left_pwm_pin, 0);
+      analogWrite(right_pwm_pin, 0);
 
       // reset everything
       turnTriggered = false; 
@@ -111,11 +114,11 @@ int Xspeed(int cur, int der) {
   //dynamic speed
   // if error is small and derivative is small go fast otherwise go slow
   if (abs(cur) < 145 && abs(der) < 35){
-    Kd = 0.82;
+    Kd = 1.5;
     return 240; // straightaway speed
   }
-  Kd = 0.77;
-  return 220;  // cornering speed
+  Kd = 1.4;
+  return 230;  // cornering speed
 }
 
 void loop() {
